@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Make non-zero exit code throw error
+
 ## 0.1.0
 
 **Initial reissue of the [test_coverage](https://github.com/pulyaevskiy/test-coverage) package that has previously been maintained by @pulyaevskiy**
