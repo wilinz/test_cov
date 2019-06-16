@@ -93,7 +93,7 @@ Future<void> runTestsAndCollect(String packageRoot) async {
     await process.stderr.drain<List<int>>();
   }
   final exitStatus = await process.exitCode;
-  if (exitStatus != 0) return;
+  if (exitStatus != 0) throw 'Tests failed with exit code $exitStatus';
 
   final resolver = coverage.Resolver(
     packagesPath: path.join(packageRoot, '.packages'),
