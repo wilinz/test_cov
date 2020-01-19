@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Update dependencies
+
 ## 0.2.0
 
 * Make non-zero exit code throw error
