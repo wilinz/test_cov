@@ -87,7 +87,7 @@ Future<void> runTestsAndCollect(String packageRoot) async {
   final serviceUri = await serviceUriCompleter.future;
   Map<String, Map<int, int>> hitmap;
   try {
-    final data = await coverage.collect(serviceUri, true, true);
+    final data = await coverage.collect(serviceUri, true, true, false, {});
     hitmap = coverage.createHitmap(data['coverage']);
   } finally {
     await process.stderr.drain<List<int>>();

@@ -7,15 +7,15 @@ authors:
   - Vitus Ortner <vitusortner.dev@gmail.com>
 
 environment:
-  sdk: '>=2.1.0 <3.0.0'
+  sdk: '>=2.6.0 <3.0.0'
 
 executables:
   test_cov:
 
 dependencies:
-  coverage: ^0.12.4
-  path: ^1.6.2
-  lcov: ^5.1.0
+  coverage: ^0.13.3
+  path: ^1.6.4
+  lcov: ^5.5.0
 
 dev_dependencies:
-  test: ^1.6.1
+  test: ^1.11.0
