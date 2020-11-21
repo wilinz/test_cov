@@ -14,5 +14,5 @@ Future main(List<String> arguments) async {
   generateMainScript(packageRoot, testFiles);
   print('Generated test-all script in test/.test_cov.dart.');
 
-  await runTestsAndCollect(Directory.current.path);
+  await runTestsAndCollect(Directory.current.path, arguments);
 }

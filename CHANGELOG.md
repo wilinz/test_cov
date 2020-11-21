@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Pass arguments when running test coverage with e.g. `pub run test_cov --no-sound-null-safety`
+
 ## 0.2.1
 
 * Update dependencies

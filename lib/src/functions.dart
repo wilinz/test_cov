@@ -69,9 +69,17 @@ void generateMainScript(Directory packageRoot, List<File> testFiles) {
       .writeAsStringSync(buffer.toString());
 }
 
-Future<void> runTestsAndCollect(String packageRoot) async {
+Future<void> runTestsAndCollect(
+  String packageRoot,
+  List<String> arguments,
+) async {
   final script = path.join(packageRoot, 'test', '.test_cov.dart');
-  final dartArgs = ['--pause-isolates-on-exit', '--enable-vm-service', script];
+  final dartArgs = [
+    '--pause-isolates-on-exit',
+    '--enable-vm-service',
+    ...arguments,
+    script,
+  ];
 
   final process = await Process.start('dart', dartArgs);
   final serviceUriCompleter = Completer<Uri>();
