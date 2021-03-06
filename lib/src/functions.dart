@@ -96,7 +96,7 @@ Future<void> runTestsAndCollect(
   Map<String, Map<int, int>> hitmap;
   try {
     final data = await coverage.collect(serviceUri, true, true, false, {});
-    hitmap = coverage.createHitmap(data['coverage']);
+    hitmap = await coverage.createHitmap(data['coverage']);
   } finally {
     await process.stderr.drain<List<int>>();
   }
@@ -121,7 +121,7 @@ Future<void> runTestsAndCollect(
 }
 
 // copied from `coverage` package
-Uri _extractObservatoryUri(String str) {
+Uri? _extractObservatoryUri(String str) {
   const kObservatoryListening = 'Observatory listening on ';
   final int msgPos = str.indexOf(kObservatoryListening);
   if (msgPos == -1) return null;
