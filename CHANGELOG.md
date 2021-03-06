@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Handle null
+
 ## 1.0.0
 
 - Update to null-safe Dart 2.12.0
