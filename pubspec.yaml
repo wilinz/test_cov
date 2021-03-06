@@ -1,6 +1,6 @@
 name: test_cov
 description: Command line utility to run tests in Dart VM and collect coverage data.
-version: 0.3.0
+version: 1.0.0
 homepage: https://github.com/vitusortner/test_cov
 authors:
   - Anatoly Pulyaevskiy <anatoly.pulyaevskiy@gmail.com>
@@ -14,7 +14,6 @@ executables:
 
 dependencies:
   coverage: ^1.0.1
-  lcov: ^6.0.0
   path: ^1.8.0
 
 dev_dependencies:
