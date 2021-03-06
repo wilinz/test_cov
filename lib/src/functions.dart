@@ -98,7 +98,7 @@ Future<void> runTestsAndCollect(
     final data = await coverage.collect(serviceUri, true, true, false, {});
     hitmap = await coverage.createHitmap(data['coverage']);
   } finally {
-    await process.stderr.drain<List<int>>();
+    await process.stderr.drain<List<int>?>();
   }
   final exitStatus = await process.exitCode;
   if (exitStatus != 0) throw 'Tests failed with exit code $exitStatus';
