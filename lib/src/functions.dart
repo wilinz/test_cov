@@ -90,7 +90,7 @@ Future<void> runTestsAndCollect(
       .transform(utf8.decoder)
       .transform(const LineSplitter())
       .listen((line) {
-    // print(line);
+    print(line);
     final uri = _extractObservatoryUri(line);
     if (uri != null) serviceUriCompleter.complete(uri);
   });
