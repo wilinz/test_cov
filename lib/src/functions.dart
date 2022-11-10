@@ -90,7 +90,7 @@ Future<void> runTestsAndCollect(
       .transform(utf8.decoder)
       .transform(const LineSplitter())
       .listen((line) {
-    print(line);
+    // print(line);
     final uri = _extractObservatoryUri(line);
     if (uri != null) serviceUriCompleter.complete(uri);
   });
@@ -106,11 +106,12 @@ Future<void> runTestsAndCollect(
   final exitStatus = await process.exitCode;
   if (exitStatus != 0) throw 'Tests failed with exit code $exitStatus';
 
-  final resolver = await coverage.Resolver.create(
-    packagesPath: path.join(packageRoot, '.packages'),
+  final resolver = await coverage.Resolver.create();
+  final coverageData = hitmap.formatLcov(
+    resolver,
+    basePath: packageRoot,
+    reportOn: ['lib${path.separator}'],
   );
-
-  final coverageData = hitmap.formatLcov(resolver);
   final coveragePath = path.join(packageRoot, 'coverage');
   final coverageDir = Directory(coveragePath);
   if (!coverageDir.existsSync()) coverageDir.createSync();
