@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:coverage/coverage.dart' as coverage;
+import 'package:coverage/coverage.dart';
 import 'package:path/path.dart' as path;
 
 final _sep = path.separator;
@@ -77,6 +78,7 @@ Future<void> runTestsAndCollect(
 ) async {
   final script = path.join(packageRoot, 'test', '.test_cov.dart');
   final dartArgs = [
+    '--pause-isolates-on-exit',
     '--enable-vm-service',
     ...arguments,
     script,
@@ -94,25 +96,21 @@ Future<void> runTestsAndCollect(
   });
 
   final serviceUri = await serviceUriCompleter.future;
-  Map<String, Map<int, int>> hitmap;
+  Map<String, HitMap> hitmap;
   try {
     final data = await coverage.collect(serviceUri, true, true, false, {});
-    hitmap = await coverage.createHitmap(data['coverage']);
+    hitmap = await coverage.HitMap.parseJson(data['coverage']);
   } finally {
     await process.stderr.drain<List<int>?>();
   }
   final exitStatus = await process.exitCode;
   if (exitStatus != 0) throw 'Tests failed with exit code $exitStatus';
 
-  final resolver = coverage.Resolver(
+  final resolver = await coverage.Resolver.create(
     packagesPath: path.join(packageRoot, '.packages'),
   );
-  final lcov = coverage.LcovFormatter(
-    resolver,
-    reportOn: ['lib${path.separator}'],
-    basePath: packageRoot,
-  );
-  final coverageData = await lcov.format(hitmap);
+
+  final coverageData = hitmap.formatLcov(resolver);
   final coveragePath = path.join(packageRoot, 'coverage');
   final coverageDir = Directory(coveragePath);
   if (!coverageDir.existsSync()) coverageDir.createSync();
@@ -123,7 +121,7 @@ Future<void> runTestsAndCollect(
 
 // copied from `coverage` package
 Uri? _extractObservatoryUri(String str) {
-  const kObservatoryListening = 'Observatory listening on ';
+  const kObservatoryListening = 'The Dart VM service is listening on ';
   final int msgPos = str.indexOf(kObservatoryListening);
   if (msgPos == -1) return null;
   final int startPos = msgPos + kObservatoryListening.length;
